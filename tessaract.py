@@ -30,5 +30,10 @@ Tesseract OCR Engine:
 """
 myconfig = r'--oem 3 --psm 6'
 
-text = pytesseract.image_to_string(PIL.Image.open('test.png'), config=myconfig)
-print(text)
+# main OCR image to string functionality
+def img_to_string(file_name):
+    text = pytesseract.image_to_string(PIL.Image.open(file_name), config=myconfig)
+    return text
+
+if __name__ == '__main__':
+    print(img_to_string('test.png'))
