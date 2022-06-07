@@ -28,12 +28,17 @@ Tesseract OCR Engine:
     2 = Tesseract + LSTM.
     3 = Default, based on what is available.
 """
-myconfig = r'--oem 3 --psm 6'
+myconfig = r'--oem 3 --psm 4'
 
 # main OCR image to string functionality
 def img_to_string(file_name):
     text = pytesseract.image_to_string(PIL.Image.open(file_name), config=myconfig)
     return text
+
+# TODO lines that parses and draws the output on the test image
+def img_to_boxes(file_name):
+    pytesseract.image_to_boxes(PIL.Image.open(file_name), config=myconfig)
+    
 
 if __name__ == '__main__':
     print(img_to_string('test.png'))

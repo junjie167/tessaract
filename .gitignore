@@ -137,3 +137,8 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+# Confidential documents
+*.pdf
+test.jpg
+assets/
