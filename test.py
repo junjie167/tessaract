@@ -6,7 +6,6 @@ from pdf2image import convert_from_path
 import numpy as np
 from PIL import Image
 import pytesseract
-import argparse
 import cv2
 
 
@@ -22,23 +21,18 @@ def pdf_to_image(pdf_path, image_path):
     input_img = np.array(Image.open(image_path))
     Image.fromarray(np.rot90(input_img, 3)).save(image_path)
 
-def OCR():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("-i", "--image", required=True, help="path to input image to be OCR'd")
-    ap.add_argument("-t", "--template", required=True, help="type of OCR to be performed")
-    args = vars(ap.parse_args())
-
-    # Set Boundaries for OCR 
+def OCR(image_path):
+   # Set Boundaries for OCR 
     # For now its Invoice number and the Item List
     OCRLocation = namedtuple('OCRLocation', ['id', 'bbox', 'keywords'])
     OCR_LOCATIONS = [
-        OCRLocation('invoice_no', (3276, 1188, 1876, 144), ['Invoice', 'No.']),
-        OCRLocation('item_list', (1800, 1808, 656, 1868), ['Brand', 'Description'])
+        OCRLocation('invoice_no', (3288, 1180, 1880, 236), ['Billing']),
+        OCRLocation('item_list', (1800, 1808, 656, 1868), ['Brand', 'Description']),
                      ]
 
     print("[INFO] loading images")
-    image = cv2.imread(args["image"])
-    template=cv2.imread(args["template"])
+    image = cv2.imread(image_path)
+    
 
     print("[INFO] OCR in progress")
     res = []
@@ -86,4 +80,4 @@ if __name__ == "__main__":
     IMG_PATH = './test.jpg'
     PDF_PATH = 'assets/test.pdf'
     pdf_to_image(PDF_PATH, IMG_PATH)
-    OCR()
+    OCR(IMG_PATH)
